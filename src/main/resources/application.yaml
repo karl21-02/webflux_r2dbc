@@ -1,1 +1,3 @@
-spring.application.name=webflux1
+logging:
+  level:
+    root: DEBUG
