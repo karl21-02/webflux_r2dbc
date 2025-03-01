@@ -28,4 +28,13 @@ public class UserService {
     public Mono<?> deleteById(Long id) {
         return userRepository.deleteById(id);
     }
+
+    public Mono<User> update(Long id, String name, String email) {
+        return userRepository.findById(id)
+                .flatMap(u -> {
+                    u.setName(name);
+                    u.setEmail(email);
+                    return userRepository.save(u);
+                });
+    }
 }
