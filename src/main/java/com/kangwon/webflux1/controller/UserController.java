@@ -1,8 +1,10 @@
 package com.kangwon.webflux1.controller;
 
 import com.kangwon.webflux1.dto.UserCreateRequest;
+import com.kangwon.webflux1.dto.UserPostResponse;
 import com.kangwon.webflux1.dto.UserResponse;
 import com.kangwon.webflux1.dto.UserUpdateRequest;
+import com.kangwon.webflux1.service.PostServiceV2;
 import com.kangwon.webflux1.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +19,7 @@ public class UserController {
 
     // CRUD
     private final UserService userService;
+    private final PostServiceV2 postServiceV2;
 
     @PostMapping("")
     public Mono<?> createUser(@RequestBody UserCreateRequest request) {
@@ -46,10 +49,21 @@ public class UserController {
                 );
     }
 
+    @DeleteMapping("/search")
+    public Mono<ResponseEntity<Object>> deleteUser(@RequestParam String name) {
+        return userService.deletByName(name).then(Mono.just(ResponseEntity.noContent().build()));
+    }
+
     @PutMapping("/{id}")
     public Mono<ResponseEntity<UserResponse>> updateUser(@PathVariable Long id, @RequestBody UserUpdateRequest request) {
         return userService.update(id, request.getName(), request.getEmail())
                 .map(u -> ResponseEntity.ok(UserResponse.from(u)))
                 .switchIfEmpty(Mono.just(ResponseEntity.notFound().build()));
+    }
+
+    @GetMapping("/{id}/posts")
+    public Flux<UserPostResponse> getUserPosts(@PathVariable Long id) {
+        return postServiceV2.findAllByUserId(id)
+                .map(UserPostResponse::of);
     }
 }

@@ -10,8 +10,8 @@ import reactor.core.publisher.Mono;
 @Service
 @RequiredArgsConstructor
 public class PostServiceV2 {
+
     // webClient mvc server request이 필요
-    //
     private final PostR2dbcRepository postR2dbcRepository;
 
     public Mono<Post> create(Long userId, String title, String content) {
@@ -28,6 +28,10 @@ public class PostServiceV2 {
 
     public Mono<Post> findById(Long id) {
         return postR2dbcRepository.findById(id);
+    }
+
+    public Flux<Post> findAllByUserId(Long id) {
+        return postR2dbcRepository.findAllByUserId(id);
     }
 
     public Mono<Void> deleteById(Long id) {
