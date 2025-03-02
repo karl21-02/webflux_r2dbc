@@ -1,4 +1,4 @@
-package com.kangwon.webflux1.client;
+package com.kangwon.webflux1.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

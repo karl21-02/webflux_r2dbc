@@ -3,23 +3,30 @@ package com.kangwon.webflux1.repository;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.LocalDateTime;
 
-@Data
+@NoArgsConstructor
+@Table("posts")
 @Builder
 @AllArgsConstructor
-@Table("users")
-public class User {
+@Data
+public class Post {
 
     @Id
     private Long id;
-    private String name;
-    private String email;
+
+    @Column("user_id")
+    private Long userId;
+
+    private String title;
+    private String content;
 
     @CreatedDate
     private LocalDateTime createdAt;

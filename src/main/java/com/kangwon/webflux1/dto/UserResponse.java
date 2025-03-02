@@ -22,8 +22,8 @@ public class UserResponse {
                 .id(user.getId())
                 .name(user.getName())
                 .email(user.getEmail())
-                .createAt(user.getCreateAt())
-                .updateAt(user.getUpdateAt())
+                .createAt(user.getCreatedAt())
+                .updateAt(user.getUpdatedAt())
                 .build();
     }
 }

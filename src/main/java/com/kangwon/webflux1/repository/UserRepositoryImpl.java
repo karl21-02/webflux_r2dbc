@@ -20,9 +20,9 @@ public class UserRepositoryImpl implements UserRepository {
 
         if(user.getId() == null) {
             user.setId(sequence.getAndAdd(1));
-            user.setCreateAt(now);
+            user.setCreatedAt(now);
         }
-        user.setUpdateAt(now);
+        user.setUpdatedAt(now);
         userHashMap.put(user.getId(), user);
         return Mono.just(user);
     }
